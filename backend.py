@@ -1,8 +1,10 @@
-# backend.py
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 import yt_dlp
 import os
-from moviepy.editor import AudioFileClip, VideoFileClip
+import logging
+
+# Set up logging
+logging.basicConfig(filename='backend.log', level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 app = Flask(__name__)
 
@@ -28,17 +30,17 @@ def convert():
     data = request.get_json()
     url = data['url']
     format = data['format']
+    logging.debug(f'Received request with URL: {url} and format: {format}')
     try:
         title, file_path = download_video(url, format)
+        logging.debug(f'Successfully downloaded: {file_path}')
         return jsonify(success=True, downloadUrl=f'/downloads/{os.path.basename(file_path)}')
     except Exception as e:
+        logging.error(f'Error during download: {str(e)}')
         return jsonify(success=False, error=str(e))
-
-@app.route('/downloads/<filename>', methods=['GET'])
-def download_file(filename):
-    return send_from_directory('downloads', filename, as_attachment=True)
 
 if __name__ == '__main__':
     if not os.path.exists('downloads'):
         os.makedirs('downloads')
-    app.run(port=5000, debug=True)
+    logging.debug('Starting Flask server')
+    app.run(debug=True)
