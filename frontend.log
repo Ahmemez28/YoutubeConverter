@@ -88,3 +88,12 @@ TypeError: string indices must be integers
     return lambda s: ''.join(s[i] for i in cache_spec)
 TypeError: string indices must be integers
  (caused by TypeError('string indices must be integers')); please report this issue on  https://github.com/yt-dlp/yt-dlp . Make sure you are using the latest version; see  https://github.com/yt-dlp/yt-dlp  on how to update. Be sure to call yt-dlp with the --verbose flag and include its complete output.
+2024-07-18 02:04:57,653 Opening the app
+2024-07-18 02:05:17,440 Sending request with URL: adasd and format: mp3
+2024-07-18 02:05:17,443 Starting new HTTP connection (1): localhost:5000
+2024-07-18 02:05:19,873 http://localhost:5000 "POST /convert HTTP/1.1" 200 162
+2024-07-18 02:05:19,875 Error from server: ERROR: 'adasd' is not a valid URL. Set --default-search "ytsearch" (or run  yt-dlp "ytsearch:adasd" ) to search YouTube
+2024-07-18 02:05:19,881 Sending request with URL: adasd and format: mp3
+2024-07-18 02:05:19,882 Starting new HTTP connection (1): localhost:5000
+2024-07-18 02:05:21,976 http://localhost:5000 "POST /convert HTTP/1.1" 200 162
+2024-07-18 02:05:21,977 Error from server: ERROR: 'adasd' is not a valid URL. Set --default-search "ytsearch" (or run  yt-dlp "ytsearch:adasd" ) to search YouTube

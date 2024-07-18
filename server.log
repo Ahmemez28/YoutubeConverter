@@ -3,23 +3,5 @@
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
  * Debug mode: on
-[youtube] 9bZkp7q19f0: Downloading webpage
-ERROR: Signature extraction failed: Traceback (most recent call last):
-  File "C:\Users\Ahmed\Documents\GitHub\SocialMediaConverter\venv\lib\site-packages\yt_dlp\extractor\youtube.py", line 1492, in _decrypt_signature
-    return func(s)
-  File "C:\Users\Ahmed\Documents\GitHub\SocialMediaConverter\venv\lib\site-packages\yt_dlp\extractor\youtube.py", line 1391, in <lambda>
-    return lambda s: ''.join(s[i] for i in cache_spec)
-  File "C:\Users\Ahmed\Documents\GitHub\SocialMediaConverter\venv\lib\site-packages\yt_dlp\extractor\youtube.py", line 1391, in <genexpr>
-    return lambda s: ''.join(s[i] for i in cache_spec)
-TypeError: string indices must be integers
- (caused by TypeError('string indices must be integers')); please report this issue on  https://github.com/yt-dlp/yt-dlp . Make sure you are using the latest version; see  https://github.com/yt-dlp/yt-dlp  on how to update. Be sure to call yt-dlp with the --verbose flag and include its complete output.
-[youtube] 9bZkp7q19f0: Downloading webpage
-ERROR: Signature extraction failed: Traceback (most recent call last):
-  File "C:\Users\Ahmed\Documents\GitHub\SocialMediaConverter\venv\lib\site-packages\yt_dlp\extractor\youtube.py", line 1492, in _decrypt_signature
-    return func(s)
-  File "C:\Users\Ahmed\Documents\GitHub\SocialMediaConverter\venv\lib\site-packages\yt_dlp\extractor\youtube.py", line 1391, in <lambda>
-    return lambda s: ''.join(s[i] for i in cache_spec)
-  File "C:\Users\Ahmed\Documents\GitHub\SocialMediaConverter\venv\lib\site-packages\yt_dlp\extractor\youtube.py", line 1391, in <genexpr>
-    return lambda s: ''.join(s[i] for i in cache_spec)
-TypeError: string indices must be integers
- (caused by TypeError('string indices must be integers')); please report this issue on  https://github.com/yt-dlp/yt-dlp . Make sure you are using the latest version; see  https://github.com/yt-dlp/yt-dlp  on how to update. Be sure to call yt-dlp with the --verbose flag and include its complete output.
+ERROR: 'adasd' is not a valid URL. Set --default-search "ytsearch" (or run  yt-dlp "ytsearch:adasd" ) to search YouTube
+ERROR: 'adasd' is not a valid URL. Set --default-search "ytsearch" (or run  yt-dlp "ytsearch:adasd" ) to search YouTube

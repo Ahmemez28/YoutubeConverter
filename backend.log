@@ -146,3 +146,15 @@ TypeError: string indices must be integers
 TypeError: string indices must be integers
  (caused by TypeError('string indices must be integers')); please report this issue on  https://github.com/yt-dlp/yt-dlp . Make sure you are using the latest version; see  https://github.com/yt-dlp/yt-dlp  on how to update. Be sure to call yt-dlp with the --verbose flag and include its complete output.
 2024-07-18 02:01:00,266 127.0.0.1 - - [18/Jul/2024 02:01:00] "POST /convert HTTP/1.1" 200 -
+2024-07-18 02:04:58,882 Starting Flask server
+2024-07-18 02:04:58,892  * Restarting with stat
+2024-07-18 02:05:00,190 Starting Flask server
+2024-07-18 02:05:00,196  * Debugger is active!
+2024-07-18 02:05:00,199  * Debugger PIN: 133-618-925
+2024-07-18 02:05:00,278  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2024-07-18 02:05:19,539 Received request with URL: adasd and format: mp3
+2024-07-18 02:05:19,873 Error during download: ERROR: 'adasd' is not a valid URL. Set --default-search "ytsearch" (or run  yt-dlp "ytsearch:adasd" ) to search YouTube
+2024-07-18 02:05:19,873 127.0.0.1 - - [18/Jul/2024 02:05:19] "POST /convert HTTP/1.1" 200 -
+2024-07-18 02:05:21,933 Received request with URL: adasd and format: mp3
+2024-07-18 02:05:21,976 Error during download: ERROR: 'adasd' is not a valid URL. Set --default-search "ytsearch" (or run  yt-dlp "ytsearch:adasd" ) to search YouTube
+2024-07-18 02:05:21,976 127.0.0.1 - - [18/Jul/2024 02:05:21] "POST /convert HTTP/1.1" 200 -
