@@ -1,7 +1,0 @@
-Flask==2.0.1
-yt-dlp==2021.6.23
-moviepy==1.0.3
-requests==2.25.1
-PyQt5==5.15.4
-PyQt5-sip==12.9.0
-pyinstaller
