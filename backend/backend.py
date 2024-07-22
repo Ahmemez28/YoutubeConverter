@@ -3,6 +3,7 @@ import yt_dlp
 import os
 import shutil
 from flask_cors import CORS
+
 app = Flask(__name__)
 CORS(app)
 DOWNLOAD_FOLDER = 'downloads'
@@ -48,7 +49,7 @@ def download_file(filename):
             app.logger.error(f"Error removing or closing downloaded file handle: {error}")
         return response
 
-    return send_from_directory(DOWNLOAD_FOLDER, filename, as_attachment=True)
+    return send_from_directory(DOWNLOAD_FOLDER, filename, as_attachment=True, mimetype='application/octet-stream')
 
 if __name__ == '__main__':
     if not os.path.exists('downloads'):

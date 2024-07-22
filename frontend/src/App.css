@@ -14,35 +14,54 @@
 }
 
 .App-icon {
-  width: 100px;
-  margin-bottom: 20px;
+  height: 80px;
 }
 
-input {
+input.form-control {
+  width: 50%;
+  margin: 20px 0;
   padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
-button {
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button.btn {
   padding: 10px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #61dafb;
-  color: white;
-  cursor: pointer;
+  font-size: 16px;
 }
 
-button:disabled {
-  background-color: #a0c4ff;
-  cursor: not-allowed;
-}
-
-
-.App-header .loading-gif {
+.loading-gif {
   width: 50px;
-  margin: 20px auto;
-  display: block;
+  margin-top: 20px;
+}
+
+.progress-bar-container {
+  width: 50%;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.progress-bar {
+  height: 20px;
+  background-color: #4caf50;
+  width: 0;
+}
+
+.message {
+  margin-top: 20px;
+  color: #61dafb;
+  font-size: 18px;
+}
+
+.footer {
+  margin-top: 40px;
+  font-size: 14px;
+  color: #bbb;
 }
