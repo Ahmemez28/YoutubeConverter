@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #282c34;
 }
 
 .App-header {
@@ -65,3 +66,32 @@ button.btn {
   font-size: 14px;
   color: #bbb;
 }
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.nav-link:hover {
+  color: #ddd;
+}
+

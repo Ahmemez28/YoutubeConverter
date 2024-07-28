@@ -3,7 +3,7 @@ import axios from "axios";
 import "../App.css"; // Create a CSS file for styles
 import icon from "./images/image.png"; // Ensure the correct path to your icon image
 import spinner from "./images/loading.gif"; // Path to spinner gif
-
+import Navbar from "./components/NavBar";
 function Convert() {
   const [url, setUrl] = useState("");
   const [message, setMessage] = useState("");
@@ -69,6 +69,7 @@ function Convert() {
 
   return (
     <div className="App">
+    <Navbar/>
       <header className="App-header">
         <img src={icon} alt="App Icon" className="App-icon" />
         <h1>YouTube Converter</h1>
