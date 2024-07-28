@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../App.css"; // Create a CSS file for styles
-import icon from "./images/image.png"; // Ensure the correct path to your icon image
-import spinner from "./images/loading.gif"; // Path to spinner gif
-import Navbar from "./components/NavBar";
+import "../App.css";
+import icon from "./images/image.png";
+import spinner from "./images/loading.gif";
+import Navbar from "./components/Navbar";
+
 function Convert() {
   const [url, setUrl] = useState("");
   const [message, setMessage] = useState("");
@@ -23,53 +24,45 @@ function Convert() {
       const response = await axios.post("http://localhost:5000/convert", {
         url,
         format,
+      }, {
+        responseType: 'stream'
       });
-      if (response.data.success) {
-        downloadFile(response.data.downloadUrl);
-      } else {
-        setMessage(`Error: ${response.data.error}`);
-        setLoading(false);
-      }
+
+      const reader = response.data.getReader();
+      const stream = new ReadableStream({
+        async start(controller) {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            controller.enqueue(value);
+            const progressEvent = { loaded: value.length, total: response.headers['content-length'] };
+            const total = progressEvent.total || 1;
+            const current = progressEvent.loaded;
+            const percentage = Math.floor((current / total) * 100);
+            setProgress(percentage);
+          }
+          controller.close();
+        }
+      });
+
+      const downloadUrl = URL.createObjectURL(await new Response(stream).blob());
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = `${new Date().getTime()}.${format}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setLoading(false);
+      setMessage("Download complete!");
     } catch (error) {
-      setMessage(
-        "Failed to connect to the server. Please ensure the server is running."
-      );
+      setMessage("Failed to connect to the server. Please ensure the server is running.");
       setLoading(false);
     }
   };
 
-  const downloadFile = (url) => {
-    axios({
-      url: `http://localhost:5000${url}`,
-      method: "GET",
-      responseType: "blob", // Important to handle binary data
-      onDownloadProgress: (progressEvent) => {
-        const total = progressEvent.total || 1;
-        const current = progressEvent.loaded;
-        const percentage = Math.floor((current / total) * 100);
-        setProgress(percentage);
-      },
-    })
-      .then((response) => {
-        const blob = new Blob([response.data]);
-        const link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        link.setAttribute("download", url.split("/").pop() || "downloadedFile");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        setLoading(false);
-        setMessage("Download complete!");
-      })
-      .catch((error) => {
-        setLoading(false);
-        setMessage("Failed to download the file.");
-      });
-  };
-
   return (
     <div className="App">
-    <Navbar/>
+      <Navbar />
       <header className="App-header">
         <img src={icon} alt="App Icon" className="App-icon" />
         <h1>YouTube Converter</h1>
