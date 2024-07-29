@@ -10,10 +10,14 @@ function Convert() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [downloadUrl, setDownloadUrl] = useState("");
+  const [progressDetails, setProgressDetails] = useState({});
 
   const handleConvert = async (format) => {
     setMessage("");
     setProgress(0);
+    setDownloadUrl("");
+    setProgressDetails({});
     if (!url) {
       setMessage("Please enter a valid YouTube URL.");
       return;
@@ -24,41 +28,38 @@ function Convert() {
       const response = await axios.post("http://localhost:5000/convert", {
         url,
         format,
-      }, {
-        responseType: 'stream'
       });
 
-      const reader = response.data.getReader();
-      const stream = new ReadableStream({
-        async start(controller) {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            controller.enqueue(value);
-            const progressEvent = { loaded: value.length, total: response.headers['content-length'] };
-            const total = progressEvent.total || 1;
-            const current = progressEvent.loaded;
-            const percentage = Math.floor((current / total) * 100);
-            setProgress(percentage);
-          }
-          controller.close();
-        }
-      });
-
-      const downloadUrl = URL.createObjectURL(await new Response(stream).blob());
-      const a = document.createElement("a");
-      a.href = downloadUrl;
-      a.download = `${new Date().getTime()}.${format}`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      setLoading(false);
-      setMessage("Download complete!");
+      if (response.data.success) {
+        setDownloadUrl(`http://localhost:5000${response.data.downloadUrl}`);
+        setMessage("Conversion complete! Click the download button.");
+      } else {
+        setMessage(`Error: ${response.data.error}`);
+      }
     } catch (error) {
       setMessage("Failed to connect to the server. Please ensure the server is running.");
-      setLoading(false);
     }
+    setLoading(false);
   };
+
+  useEffect(() => {
+    if (url) {
+      const eventSource = new EventSource(`http://localhost:5000/progress/${url}`);
+      eventSource.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        setProgressDetails(data);
+        if (data.total_bytes) {
+          setProgress((data.downloaded_bytes / data.total_bytes) * 100);
+        }
+        if (data.status === 'finished') {
+          eventSource.close();
+        }
+      };
+      return () => {
+        eventSource.close();
+      };
+    }
+  }, [url]);
 
   return (
     <div className="App">
@@ -68,7 +69,7 @@ function Convert() {
         <h1>YouTube Converter</h1>
         <input
           type="text"
-          className="form-control"
+          className="form-control w-50 rounded my-2"
           placeholder="Enter YouTube URL"
           value={url}
           onChange={(e) => setUrl(e.target.value)}
@@ -96,12 +97,29 @@ function Convert() {
             <div className="progress-bar-container">
               <div className="progress-bar" style={{ width: `${progress}%` }}></div>
             </div>
+            <div className="progress-details">
+              {progressDetails.status === 'downloading' && (
+                <div>
+                  <p>Filename: {progressDetails.filename}</p>
+                  <p>Speed: {progressDetails.speed} bytes/s</p>
+                  <p>ETA: {progressDetails.eta} seconds</p>
+                </div>
+              )}
+            </div>
           </>
         )}
         <div
           className="message"
           dangerouslySetInnerHTML={{ __html: message }}
         />
+        {downloadUrl && (
+          <button
+            className="btn btn-success"
+            onClick={() => window.location.href = downloadUrl}
+          >
+            Download
+          </button>
+        )}
         <p className="footer">Created by Ahmed</p>
       </header>
     </div>
