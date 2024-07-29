@@ -6,6 +6,8 @@ services:
       context: ./backend
     ports:
       - "5000:5000"
+    volumes:
+    - ./downloads:/backend/downloads
 
   frontend:
     build:

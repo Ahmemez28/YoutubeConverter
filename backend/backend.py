@@ -3,6 +3,8 @@ import yt_dlp
 import os
 import shutil
 from flask_cors import CORS
+import urllib.parse
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -69,8 +71,9 @@ def download_video(url, format, progress_hook):
         title = info_dict.get('title', None)
         ext = 'mp3' if format == 'mp3' else 'mp4'
         filename = f'{title}.{ext}'
+        safe_filename = urllib.parse.quote(filename, safe='')
         filepath = os.path.join(DOWNLOAD_FOLDER, filename)
-        return f'/downloads/{filename}'
+        return f'/downloads/{safe_filename}'
 
 @app.route('/progress/<task_id>')
 def progress(task_id):
@@ -85,8 +88,9 @@ def progress(task_id):
 
     return Response(generate(), mimetype='text/event-stream')
 
-@app.route('/downloads/<filename>')
+@app.route('/downloads/<path:filename>')
 def download_file(filename):
+    filename = urllib.parse.unquote(filename)
     return send_from_directory(DOWNLOAD_FOLDER, filename, as_attachment=True, mimetype='application/octet-stream')
 
 if __name__ == '__main__':

@@ -18,6 +18,9 @@ RUN apt-get update && \
 # Copy the rest of the application code into the container
 COPY . .
 
+# Ensure the downloads directory exists and has the correct permissions
+RUN mkdir -p /app/downloads && chmod -R 777 /app/downloads
+
 # Expose the port the app runs on
 EXPOSE 5000
 

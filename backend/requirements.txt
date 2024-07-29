@@ -6,3 +6,4 @@ PyQt5
 PyQt5-sip
 pyinstaller
 flask_cors
+urllib3
